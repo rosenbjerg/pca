@@ -1,0 +1,35 @@
+Scene 'inside the shed' with background 'backgrounds/shed_1.png' with resolution 1280x720
+
+Actor 'rabbit' with sprite 'sprites/rabbit.svg' and size 1.2 at (870, 527)
+
+Placeholder rabbitQuest1 = 'give the bunny some grass'
+
+Interaction with 'rabbit' {
+    if objective rabbitQuest1 started {
+        if player has 'some grass' {
+            player gives 'some grass' to 'rabbit' ->
+            'rabbit' says "thank you! i'm getting out of this shed now" ->
+            player completes objective rabbitQuest1 ->
+            'rabbit' moves to (-80, 200) ->
+            'rabbit' disappears
+        }
+        else {
+            'rabbit' says 'please find me some grass' ->
+            'rabbit' says "i don't have the energy to go anywhere"
+        }
+    }
+    else {
+        'rabbit' says 'what are you doing here?' ->
+        'rabbit' says 'that door has been locked for a long time' ->
+        'rabbit' says "now that the door is open and you're here" ->
+        'rabbit' says '- do you happen to have some grass?' ->
+        'rabbit' says "i'm hungry and need something to eat" &
+        player is given objective rabbitQuest1
+    }
+}
+
+Object 'back to meadow' with sprite 'sprites/down-arrow.svg' at (656, 630)
+
+Interaction with 'back to meadow' {
+    go to scene 'scenes/meadows'
+}

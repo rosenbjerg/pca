@@ -1,0 +1,16 @@
+{
+  "name": "point-and-click-adventure",
+  "version": "1.0.0",
+  "description": "a DSL for creating small point & click adventures and \"engine\" for it",
+  "main": "index.js",
+  "author": "Malte Rosenbjerg",
+  "license": "MIT",
+  "dependencies": {
+    "rollup": "^0.66.3",
+    "rollup-plugin-pegjs": "^2.1.3"
+  },
+  "scripts": {
+    "build": "rollup --config rollup.config.js --environment NODE_ENV:production",
+    "dev": "rollup --watch --config rollup.config.js --environment NODE_ENV:development"
+  }
+}

@@ -1,0 +1,71 @@
+Scene 'in the meadows' with background 'backgrounds/fields_1.png' with resolution 1280x720
+
+Placeholder deerQuest1 = 'find apple for the deers'
+Placeholder apple = 'a red apple'
+
+Object 'house' with sprite 'sprites/shed.png' and size 0.6 at (750, 525)
+
+Interaction with 'house' {
+  if player has 'key to shed' {
+    go to scene 'scenes/inside_shed'
+  }
+  else {
+    display 'the door is locked, it might require a key to open'
+  }
+}
+
+Actor 'big deer' with sprite 'sprites/deer.svg' and size 1.2 at (858, 570)
+
+Interaction with 'big deer' {
+  if objective deerQuest1 completed {
+    'big deer' says 'thank you so much for the apple!' ->
+    'big deer' says 'you can have this key' ->
+    'big deer' says 'i found it near that tree over there' &
+    player receives 'key to shed' ->
+    'small deer' moves to (-80, 606) over 7s & 'big deer' moves to (-80, 568) over 8s ->
+    'small deer' disappears & 'big deer' disappears
+  }
+  else {
+    'big deer' gets 'hungry' &
+    'big deer' says "i'm hungry" &
+    'big deer' moves to (805, 568) over 1s ->
+    'big deer' moves to (878, 568) over 1.5s ->
+    'big deer' moves to (872, 568) over 0.3s
+  }
+}
+
+
+Actor 'small deer' with sprite 'sprites/deer.svg' at (917, 596)
+
+Interaction with 'small deer' {
+  if objective deerQuest1 started and player has apple {
+    player gives apple to 'small deer' ->
+    player completes objective deerQuest1
+  } ->
+  if not objective deerQuest1 started and not objective deerQuest1 completed {
+    'small deer' moves to (872, 606) over 1s & 'big deer' moves to (805, 568) over 2s ->
+    'small deer' gets 'hungry' & 'small deer' says "we're are hungry!" ->
+    'small deer' says 'find us an apple' ->
+    player is given objective deerQuest1
+  } &
+  if objective deerQuest1 completed {
+    'small deer' says 'thank you so much!' ->
+    'small deer' says 'i think big deer has found something for you'
+  }
+}
+
+
+Object apple with sprite 'sprites/apple.svg' and size 0.2 at (530, 563)
+
+Interaction with apple {
+  display 'you yank the apple of its branch' ->
+  apple  disappears &
+  player receives apple
+}
+
+Object 'grass' with sprite 'sprites/grass.svg' and size 0.4 at (662, 615)
+
+Interaction with 'grass' {
+  'grass'  disappears &
+  player receives 'some grass'
+}

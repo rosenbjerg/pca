@@ -1,0 +1,21 @@
+{
+  "name": "pca-desktop-player",
+  "version": "1.0.0",
+  "description": "A minimal player for PCA scenes (.pcas)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "pca",
+    "engine",
+    "scene",
+    "player"
+  ],
+  "author": "GitHub",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^3.0.0"
+  }
+}

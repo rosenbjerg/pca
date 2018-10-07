@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scene player - Point & Click Adventure</title>
+    <script src="built-engine.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <style>
+        :root {
+            --game-width: 100%;
+        }
+
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #game {
+            width: var(--game-width);
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+        /* Styling of in-game elements */
+        .dialog {
+            position: absolute;
+            background-color: white;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px #212121 solid;
+        }
+        .flipped {
+            transform: scaleX(-1);
+        }
+        .dialog-container {
+            max-height: 100px;
+            overflow-y: auto;
+            width: var(--game-width);
+            background-color: #E3F2FD;
+        }
+        .dialog-container > div {
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+        .dialog-container > div:first-child {
+            background-color: #BBDEFB;
+        }
+    </style>
+
+<body>
+
+<div id="game"></div>
+
+<script defer>
+    const run = async () => {
+        await pca.start("scenes/meadows", document.getElementById("game"));
+    };
+    run();
+</script>
+</body>
+</html>
