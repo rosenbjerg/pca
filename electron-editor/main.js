@@ -11,6 +11,7 @@ function createWindow () {
   // mainWindow.setMenu(null);
   // and load the player.html of the app.
   mainWindow.loadFile('../editor.html');
+  mainWindow.setMenu(null);
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

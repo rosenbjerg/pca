@@ -31,7 +31,6 @@
 </head>
 <body>
 <!--<button id="verify">Verify code</button>-->
-<div id="output"></div>
 <textarea id="code">
 Scene 'in the meadows' with background 'backgrounds/fields_1.png' with resolution 1280x720
 
@@ -105,19 +104,21 @@ Interaction with 'grass' {
   player receives 'some grass'
 }
 </textarea>
+<div id="output"></div>
 
 <script defer>
     CodeMirror.defineSimpleMode("pca", {
         start: [
-            {regex: /"[^"]+"/, token: "string"},
-            {regex: /'[^']+'/, token: "string"},
-            {regex: /(?:Scene|Placeholder|Actor|Object|Interaction|if|else|not|and)\b/, token: "keyword"},
+            {regex: /("[^"]+")|('[^']+')/, token: "string"},
+            {regex: /\(\-?\d+ *\, *\-?\d+ ?\)|\d+x\d+|(-?(?:\d+)(\.\d+)?(m|s|ms))/, token: "attribute"},
+            {regex: /Scene|Placeholder|Actor|Object|Interaction/, token: "builtin"},
             {regex: /player/, token: "atom"},
-            {regex: /-?(?:[0-9]+)(\.[0-9]+)?/i, token: "number"},
+            {regex: /if|else|not|and/, token: "keyword"},
+            {regex: / -?(?:\d+)(\.\d+)? /, token: "number"},
             {regex: /#.*/, token: "comment"},
-            {regex: /&|->/, token: "keyword"},
-            {regex: /[\{\[\(]/, indent: true},
-            {regex: /[\}\]\)]/, dedent: true}
+            {regex: /&|->/, token: "meta"},
+            {regex: /\{/, indent: true},
+            {regex: /\}/, dedent: true}
         ],
         meta: {
             dontIndentStates: ["comment"],

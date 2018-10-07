@@ -7,10 +7,11 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1280, height: 870});
+  mainWindow = new BrowserWindow({width: 1280, height: 850});
   // mainWindow.setMenu(null);
   // and load the player.html of the app.
   mainWindow.loadFile('../player.html');
+  mainWindow.setMenu(null);
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

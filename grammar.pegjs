@@ -23,7 +23,7 @@
     function lookupPlaceholder(name, allowedTypes) {
     	const node = placeholders[name];
         if (node === undefined) {
-        	return error("Placeholder lookup for '"+name+"' failed");
+        	return error("Placeholder '"+name+"' not found");
         }
         if (allowedTypes !== undefined && !allowedTypes.includes(node.type)) {
         	return error("Invalid type used: '" + node.type + "' but requires: " + allowedTypes.join(", "))
