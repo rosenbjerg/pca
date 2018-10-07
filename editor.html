@@ -7,27 +7,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.2/addon/mode/simple.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.40.2/theme/material.min.css">
     <style>
         html, body {
             padding: 0;
             margin: 0;
-            background-color: #FAFAFA;
         }
-        body.invalid {
-            background-color: #FCE4EC;
-        }
-        body.invalid .CodeMirror {
-             background-color: #FCE4EC;
-         }
         #output {
-
+            position: fixed;
+            left: 35px;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            padding-left: 10px;
+            background-color: rgba(255,255,255, 0.75);
+            font-family: monospace;
+            font-size: 12pt;
         }
         .CodeMirror {
             height: 100%;
-            /*font-family: 'Roboto Mono', monospace;*/
-            font-size: 11pt;
-            color: #424242;
-            background-color: #FAFAFA;
         }
     </style>
 </head>
@@ -110,16 +108,14 @@ Interaction with 'grass' {
 
 <script defer>
     CodeMirror.defineSimpleMode("pca", {
-        // The start state contains the rules that are intially used
         start: [
-            // The regex matches the token, the token property contains the type
             {regex: /"[^"]+"/, token: "string"},
             {regex: /'[^']+'/, token: "string"},
-            {regex: /(?:Scene|Placeholder|Actor|Object|Interaction|if|else)\b/, token: "keyword"},
-            {regex: /and|not|player/, token: "atom"},
+            {regex: /(?:Scene|Placeholder|Actor|Object|Interaction|if|else|not|and)\b/, token: "keyword"},
+            {regex: /player/, token: "atom"},
             {regex: /-?(?:[0-9]+)(\.[0-9]+)?/i, token: "number"},
             {regex: /#.*/, token: "comment"},
-            {regex: /&|->/, token: "operator"},
+            {regex: /&|->/, token: "keyword"},
             {regex: /[\{\[\(]/, indent: true},
             {regex: /[\}\]\)]/, dedent: true}
         ],
@@ -133,10 +129,10 @@ Interaction with 'grass' {
     const codeMirror = CodeMirror.fromTextArea(textarea, {
         lineNumbers: true,
         gutter: true,
-        lineWrapping: true
+        lineWrapping: true,
+        theme: 'material'
     });
     codeMirror.on('change', async cm => {
-        console.log("changed");
         try {
             const code = codeMirror.getValue();
             await pca.interpret(code);
@@ -145,32 +141,9 @@ Interaction with 'grass' {
             document.body.className = "invalid";
             return output.innerText = e.message;
         }
-        output.innerText = "Scene has no syntax errors";
+        output.innerText = "";
         document.body.className = ""
     });
-    // document.getElementById("verify").addEventListener("click", async () => {
-    //     try {
-    //         const code = myCodeMirror.getValue();
-    //         await pca.interpret(code);
-    //     }
-    //     catch (e) {
-    //         return output.innerText = e.message;
-    //     }
-    //     output.innerText = "OK";
-    // });
-    // textarea.oninput = async ev => {
-    //     console.log(ev);
-    //     try {
-    //         const code = myCodeMirror.getValue();
-    //         await pca.interpret(code);
-    //     }
-    //     catch (e) {
-    //         document.body.className = "invalid";
-    //         return output.innerText = e.message;
-    //     }
-    //     output.innerText = "";
-    //     document.body.className = ""
-    // };
 </script>
 
 </body>
