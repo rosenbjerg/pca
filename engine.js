@@ -2,7 +2,7 @@ import parser from './grammar.pegjs';
 import makeDraggable from './draggable';
 
 
-const DEBUG = true;
+const DEBUG = false;
 
 
 const _dialogContainer = document.createElement("div");
@@ -14,7 +14,7 @@ let _currentScene, _container, _player;
 // interaction implementations
 const functions = {
 
-    // 2nd arg: { entity, action:"says", message }
+    // 3rd arg: { entity, action:"says", message }
     says: (scene, actedOnEntity, { message }) => new Promise(acc => {
         const dialog = document.createElement('span');
         dialog.className = 'dialog';
@@ -31,7 +31,7 @@ const functions = {
         }, delay);
     }),
 
-    // 2nd arg: { entity, action:"gets", status }
+    // 3rd arg: { entity, action:"gets", status }
     gets: (scene, actedOnEntity, { entity, status }) => {
         actedOnEntity.statusses.push(status);
         if (entity === 'player') {
@@ -42,7 +42,7 @@ const functions = {
         }
     },
 
-    // 2nd arg: { entity, action:"give", item, toEntity }
+    // 3rd arg: { entity, action:"give", item, toEntity }
     give: (scene, actedOnEntity, {entity, item, toEntity}) => {
         const entityObj = scene.entities[entity];
         if (removeFromArray(entityObj.items, item)) {
@@ -61,7 +61,7 @@ const functions = {
         }
     },
 
-    // 2nd arg: { entity, action:"move_to", position, time }
+    // 3rd arg: { entity, action:"move_to", position, time }
     move_to: async (scene, actedOnEntity, { position, time}) => {
         const movingRight = actedOnEntity.position.x < position.x;
         flip(actedOnEntity.__domElement, movingRight);
@@ -72,28 +72,28 @@ const functions = {
         await delayAsync(time);
     },
 
-    // 2nd arg: { action: "goto_scene", scene }
+    // 3rd arg: { action: "goto_scene", scene }
     goto_scene: (_, actedOnEntity, {scene}) => runScene(scene),
 
-    // 2nd arg: { action: "new_objective",  objective }
+    // 3rd arg: { action: "new_objective",  objective }
     new_objective: (scene, actedOnEntity, { objective }) => {
         _player.objectives.push(objective);
         displayMsg(`objective started: ` + objective);
     },
 
-    // 2nd arg: { action: "completed_objective",  objective }
+    // 3rd arg: { action: "completed_objective",  objective }
     completed_objective: (scene, actedOnEntity, { objective }) => {
         removeFromArray(_player.objectives, objective);
         _player.completedObjectives.push(objective);
         displayMsg(`objective completed: ${objective}`);
     },
 
-    // 2nd arg: { action: "display", text }
+    // 3rd arg: { action: "display", text }
     display: (scene, actedOnEntity, { text }) => {
         displayMsg(text);
     },
 
-    // 2nd arg: { entity, action:"receives", item }
+    // 3rd arg: { entity, action:"receives", item }
     receives: (scene, actedOnEntity, { entity, item }) => {
         actedOnEntity.items.push(item);
         if (entity === 'player') {
@@ -104,13 +104,13 @@ const functions = {
         }
     },
 
-    // 2nd arg: { entity, action:"disappear" }
+    // 3rd arg: { entity, action:"disappear" }
     disappear: (scene, actedOnEntity) => {
         delete scene.entities[actedOnEntity.id];
         actedOnEntity.__domElement.remove();
     },
 
-    // 2nd arg: { entity, action:"move_to", position, time }
+    // 3rd arg: { entity, action:"move_to", position, time }
     conditional: async (scene, actedOnEntity, interaction) => {
         if (checkConditions(interaction.ifBranch.conditions, scene)) {
             await executeInteractions(interaction.ifBranch.interactions, scene);

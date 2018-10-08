@@ -10,7 +10,7 @@ Interaction with 'rabbit' {
             player gives 'some grass' to 'rabbit' ->
             'rabbit' says "thank you! i'm getting out of this shed now" ->
             player completes objective rabbitQuest1 ->
-            'rabbit' moves to (-80, 200) ->
+            'rabbit' moves to (-80, 200) over 3s ->
             'rabbit' disappears
         }
         else {

@@ -5,7 +5,6 @@
     <title>Scene player - Point & Click Adventure</title>
     <script src="built-engine.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
     <style>
         :root {
             --game-width: 100%;
@@ -52,16 +51,12 @@
             background-color: #BBDEFB;
         }
     </style>
-
 <body>
 
 <div id="game"></div>
 
 <script defer>
-    const run = async () => {
-        await pca.start("scenes/meadows", document.getElementById("game"));
-    };
-    run();
+    pca.start("scenes/meadows", document.getElementById("game"));
 </script>
 </body>
 </html>
